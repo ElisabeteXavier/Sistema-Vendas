@@ -1,1 +1,1 @@
-# CLisp
+# Sistema para Cadastro de Vendas
