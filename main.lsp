@@ -1,6 +1,8 @@
 (load "model/cliente.lsp")
 (load "menu/menu-cliente.lsp")
 (load "menu/menu-venda.lsp")
+(load "model/venda.lsp")
+
 
 (defun main ()
   (loop
