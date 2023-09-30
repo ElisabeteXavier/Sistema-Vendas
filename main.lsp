@@ -1,5 +1,6 @@
 (load "model/cliente.lsp")
 (load "menu/menu-cliente.lsp")
+(load "menu/menu-venda.lsp")
 
 (defun main ()
   (loop
@@ -12,7 +13,9 @@
     (let ((opcao (read)))
       (cond
        ((= opcao 1) ; Opção Cliente
-        (menu-cliente)) ; Chame o menu do Cliente
+        (menu-cliente)) 
+        ((= opcao 3) ; Opção Venda
+        (menu-venda)) ; Chame o menu do Venda
        ;; Resto do código para Produto e Venda, se necessário
        ((= opcao 0)
         (format t "Saindo do programa.~%")
