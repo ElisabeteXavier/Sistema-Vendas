@@ -1,5 +1,3 @@
-(load "cliente.lsp")
-
 (defstruct cliente
   (nome "")
   (cpf ""))
