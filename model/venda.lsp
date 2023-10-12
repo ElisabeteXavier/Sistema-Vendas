@@ -9,7 +9,7 @@
   (valor-total 0.0 )
   (status nil )
   (cliente nil) ; Assume que "cliente" é a struct para informações do cliente
-  (itensVenda '() :type (list item-venda)))
+  (itensVenda (list)))
 
 (defvar *vendas* (list))
 
@@ -53,9 +53,8 @@
     (format t "Deseja registrar outra venda? (S/N): ")
     (let ((resposta (read-line)))
       (when (string= resposta "N")
-        (return)))
-    )
-    (let ((valor-venda (calc-valor-venda *itemvendas*))) ; Calcula o valor total da venda com base nos itens de venda.
+
+      (let ((valor-venda (calc-valor-venda *itemvendas*))) ; Calcula o valor total da venda com base nos itens de venda.
       (format t "Valor total da venda: ~a~%" valor-venda)
       (let ((venda (make-venda :valor-total valor-venda :status t :cliente nil :itensVenda *itemvendas*)))
         (push venda *vendas*) ; Adiciona a venda à lista de vendas.
@@ -63,4 +62,7 @@
         (format t "Venda registrada com sucesso.")
       )
     )
+        (return)))
+    )
+    
 )
