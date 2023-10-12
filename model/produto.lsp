@@ -95,7 +95,7 @@
 
 
 (defun baixa-saldo-produto (produto quantidade-a-baixar)
-  (if (<= (produto-quantidade produto) quantidade-a-baixar)
+  (if (< (produto-quantidade produto) quantidade-a-baixar)
       nil ; Retorna nil se não houver saldo suficiente
       (progn
         ; Reduza a quantidade disponível no produto
