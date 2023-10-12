@@ -1,0 +1,27 @@
+(defun menu-produto ()
+  (loop
+    (format t "Menu Cadastro de Produto~%")
+    (format t "1 - Cadastrar Produto~%")
+    (format t "2 - Consultar Produto~%")
+    (format t "3 - Atualizar Produto~%")
+    (format t "4 - Listar Todos os Produtos~%")
+    (format t "5 - Deletar Produto~%") ; Nova opção para deletar um produto
+    (format t "0 - Voltar ao Menu Principal~%")
+    (format t "Digite a opção desejada: ")
+    (let ((produto-opcao (read)))
+      (cond
+       ((= produto-opcao 1)
+        (cadastrar-produto))
+       ((= produto-opcao 2)
+        (consultar-produto))
+       ((= produto-opcao 3)
+        (atualizar-produto))
+       ((= produto-opcao 4)
+        (listar-produtos))
+       ((= produto-opcao 5)
+        (deletar-produto))
+       ((= produto-opcao 0)
+        (format t "Voltando ao Menu Principal~%")
+        (return-from menu-cadastro-produto))
+       (t
+        (format t "Opção inválida. Tente novamente.~%"))))))
