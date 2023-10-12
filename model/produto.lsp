@@ -47,11 +47,7 @@
                                    :test #'string=)))
       (if mostrar-mensagem
           (if produto-encontrado
-              (format t "Produto encontrado:% Código: ~a% Nome: a% Quantidade: a% Valor: a%"
-                      (getf produto-encontrado :codigo)
-                      (getf produto-encontrado :nome)
-                      (getf produto-encontrado :quantidade)
-                      (getf produto-encontrado :valor))
+              (format t "Produto encontrado: ~A~%" produto-encontrado)
               (format t "Produto com código a não encontrado.%" codigo-consulta)))
           produto-encontrado)))
 
