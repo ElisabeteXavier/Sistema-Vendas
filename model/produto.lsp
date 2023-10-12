@@ -93,6 +93,17 @@
   (format t "Fim da Lista de Produtos~%"))
 
 
+
+(defun baixa-saldo-produto (produto quantidade-a-baixar)
+  (if (<= (produto-quantidade produto) quantidade-a-baixar)
+      nil ; Retorna nil se não houver saldo suficiente
+      (progn
+        ; Reduza a quantidade disponível no produto
+        (setf (produto-quantidade produto) (- (produto-quantidade produto) quantidade-a-baixar))
+        t))) ; Retorna true se a baixa for bem-sucedida
+
+
+
 (defun deletar-produto ()
   (format t "Digite o código do produto que deseja remover: ")
   (let ((codigo-remover (read-line)))
