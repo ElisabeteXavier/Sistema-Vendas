@@ -15,7 +15,7 @@
 (defun atualizar-cliente ()
   (format t "Digite o CPF do cliente para atualização: ")
   (let ((cpf (read)))
-    (let ((cliente (find-cliente cpf)))
+    (let ((cliente (consultar-cliente cpf Nil)))
       (if cliente
           (progn
             (format t "Digite o novo nome do cliente: ")
@@ -27,7 +27,7 @@
 (defun apagar-cliente ()
   (format t "Digite o CPF do cliente para apagar: ")
   (let ((cpf (read)))
-    (let ((cliente (find-cliente cpf)))
+    (let ((cliente (consultar-cliente cpf)))
       (if cliente
           (progn
             (setq *clientes* (remove cliente *clientes* :test #'eq))
@@ -39,10 +39,16 @@
   (dolist (cliente *clientes*)
     (format t "Nome: ~a, CPF: ~a~%" (cliente-nome cliente) (cliente-cpf cliente))))
 
-(defun consultar-cliente ()
-  (format t "Digite o cpf do cliente: ")
-  (let ((cpf (read)))
-    (let ((cliente (find cpf *clientes* :test #'equal :key #'cliente-cpf)))
-      (if cliente
-          (format t "Cliente encontrado: ~A~%" cliente)
-          (format t "Cliente não encontrado.~%")))))
+(defun consultar-cliente (&optional cpf mostrar-mensagem)
+  (unless cpf
+    (format t "Digite o cpf do cliente: ")
+    (setq cpf (read)))
+  (let ((cliente (find cpf *clientes* :test #'equal :key #'cliente-cpf)))
+    (if cliente
+        (if mostrar-mensagem
+            (format t "Cliente encontrado: ~A~%" cliente))
+        (if mostrar-mensagem
+            (format t "Cliente não encontrado.~%")))
+    cliente))
+
+
