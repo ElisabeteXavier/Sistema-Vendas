@@ -37,11 +37,11 @@
                         (let ((item-venda (make-item-venda :produto-ref produto :quantidade quantidade :valor valor-total)))
                           (format t "Item-venda criado: ~a~%" item-venda)
                           (push item-venda *itemvendas*) ; Adicione o item-venda à lista de itens de venda atual.
-                          (format t "Item-venda adicionado à venda atual.")
+                          (format t "Item-venda adicionado à venda atual.~%")
                         )
                       )
                     )
-                    (format t "Quantidade inválida.")
+                    (format t "Quantidade inválida.~%")
                 )
               )
             )
@@ -59,7 +59,7 @@
       (let ((venda (make-venda :valor-total valor-venda :status t :cliente nil :itensVenda *itemvendas*)))
         (push venda *vendas*) ; Adiciona a venda à lista de vendas.
         (setf *itemvendas* (list)) ; Limpa a lista de itens de venda para a próxima venda.
-        (format t "Venda registrada com sucesso.")
+        (format t "Venda registrada com sucesso.~%")
       )
     )
         (return)))
