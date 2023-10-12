@@ -1,13 +1,13 @@
 (defstruct item-venda
   (produto-ref nil) ; Referência ao produto na lista *produtos*
-  (quantidade 0 :type integer)
-  (valor 0.0 :type double-float))
+  (quantidade 0 )
+  (valor 0.0 ))
 
 (defvar *itemvendas* (list))
 
 (defstruct venda
-  (valor-total 0.0 :type double-float)
-  (status nil :type boolean)
+  (valor-total 0.0 )
+  (status nil )
   (cliente nil) ; Assume que "cliente" é a struct para informações do cliente
   (itensVenda '() :type (list item-venda)))
 
@@ -23,16 +23,16 @@
   (loop
     (format t "Informe o código do produto: ")
     (let ((codigo (read-line)))
-      (let ((produto (find-produto codigo)))
+      (let ((produto (consultar-produto codigo)))
         (if produto
             (progn
               (format t "Produto encontrado: ~a~%" produto)
               (format t "Informe a quantidade: ")
-              (let ((quantidade (parse-integer (read-line))))
+              (let ((quantidade (read)))
                 (if quantidade
                     (progn
                       (format t "Quantidade válida: ~a~" quantidade)
-                      (let ((valor-total (calc-valor-item quantidade (produto-preco produto))))
+                      (let ((valor-total (calc-valor-item quantidade (produto-valor produto))))
                         (format t "Valor total do item: ~a~%" valor-total)
                         (let ((item-venda (make-item-venda :produto-ref produto :quantidade quantidade :valor valor-total)))
                           (format t "Item-venda criado: ~a~" item-venda)
