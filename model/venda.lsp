@@ -66,3 +66,23 @@
     )
     
 )
+
+(defun relatorio-venda (venda)
+  (format t "===== Relatório de Venda =====~%")
+  (format t "Cliente: ~a~%" (venda-cliente venda))
+  (format t "Status: ~a~%" (if (venda-status venda) "Concluída" "Em andamento"))
+  (format t "Itens da Venda:~%")
+  (dolist (item (venda-itensVenda venda))
+    (format t "Produto: ~a, Quantidade: ~a, Valor Total: ~a~%"
+            (item-venda-produto-ref item)
+            (item-venda-quantidade item)
+            (item-venda-valor item)))
+  (format t "Valor Total da Venda: ~a~%" (venda-valor-total venda))
+  (format t "==============================~%"))
+
+(defun listar-vendas()
+  (format t "===== Lista de Vendas =====~%")
+  (dolist (venda *vendas*)
+    (relatorio-venda venda)
+    (format t "--------------------------~%"))
+  (format t "==============================~%"))
