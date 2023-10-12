@@ -73,6 +73,16 @@
     )
 )
 
+(defun consultar-venda (codigo-venda)
+  (let ((venda-encontrada (find codigo-venda *vendas* :test #'equal :key #'venda-codigo)))
+    (if venda-encontrada
+        (format t "Venda encontrada:~% Código: ~a~% Valor Total: ~a~% Status: ~a~% Cliente: ~a~%"
+                (venda-codigo venda-encontrada)
+                (venda-valor-total venda-encontrada)
+                (if (venda-status venda-encontrada) "Ativa" "Cancelada")
+                (venda-cliente venda-encontrada))
+        (format t "Venda com código ~a não encontrada.~%" codigo-venda))))
+
 (defun relatorio-venda (venda)
   (format t "===== Relatório de Venda =====~%")
   (format t "Cliente: ~a~%" (venda-cliente venda))
