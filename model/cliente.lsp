@@ -8,13 +8,13 @@
   (format t "Digite o nome do cliente: ")
   (let ((nome (read)))
     (format t "Digite o CPF do cliente: ")
-    (let ((cpf (read)))
+    (let ((cpf (read-line)))
       (push (make-cliente :nome nome :cpf cpf) *clientes*)
       (format t "Cliente cadastrado: ~a (CPF: ~a)~%" nome cpf))))
 
 (defun atualizar-cliente ()
   (format t "Digite o CPF do cliente para atualização: ")
-  (let ((cpf (read)))
+  (let ((cpf (read-line)))
     (let ((cliente (consultar-cliente cpf)))
       (if cliente
           (progn
@@ -27,7 +27,7 @@
 
 (defun apagar-cliente ()
   (format t "Digite o CPF do cliente para apagar: ")
-  (let ((cpf (read)))
+  (let ((cpf (read-line)))
     (let ((cliente (consultar-cliente cpf)))
       (if cliente
           (progn
@@ -48,7 +48,7 @@
 (defun consultar-cliente (&optional cpf mostrar-mensagem)
   (unless cpf
     (format t "Digite o cpf do cliente: ")
-    (setq cpf (read)))
+    (setq cpf (read-line)))
   (let ((cliente (find cpf *clientes* :test #'equal :key #'cliente-cpf)))
     (if cliente
         (if mostrar-mensagem

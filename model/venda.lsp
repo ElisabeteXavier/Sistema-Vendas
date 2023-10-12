@@ -1,5 +1,6 @@
 (load "model/item-venda.lsp")
 (load "model/produto.lsp")
+(load "model/cliente.lsp")
 
 (defstruct venda
   (codigo 0 )
@@ -9,6 +10,7 @@
   (itensVenda (list)))
 
 (defvar *vendas* (list))
+(defvar *cliente* nil) 
 
 (defun calc-valor-item (quantidade valor-produto)
   (* quantidade valor-produto))
@@ -24,6 +26,16 @@
     codigo))
 
 (defun registrar-venda ()
+  (format t "Deseja informar cliente? (S/N): ")
+  (let ((confirmacao (read-line)))
+    (if (string= confirmacao "S")
+    (progn 
+        (format t "Informe o cpf do cliente: ")
+        (let ((cpf (read-line)))
+          (setf cliente (consultar-cliente cpf t))))
+          (setf cliente nil)
+    )
+  )
   (loop
     (format t "Informe o código do produto: ")
     (let ((codigo (read-line)))
@@ -58,7 +70,7 @@
       )
     )
 
-    (format t "Deseja registrar outra venda? (S/N): ")
+    (format t "Deseja adicionar mais itens a esta venda? (S/N): ")
     (let ((resposta (read-line)))
       (when (string= resposta "N")
 
@@ -67,7 +79,7 @@
       (let ((venda (make-venda :codigo (gerar-codigo-venda) ; Gera o código da venda automaticamente
                                :valor-total valor-venda
                                :status t
-                               :cliente nil
+                               :cliente cliente
                                :itensVenda *itemvendas*)))
         (push venda *vendas*) ; Adiciona a venda à lista de vendas.
         (setf *itemvendas* (list)) ; Limpa a lista de itens de venda para a próxima venda.
