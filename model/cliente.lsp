@@ -39,5 +39,10 @@
   (dolist (cliente *clientes*)
     (format t "Nome: ~a, CPF: ~a~%" (cliente-nome cliente) (cliente-cpf cliente))))
 
-(defun find-cliente (cpf)
-  (find cpf *clientes* :test #'equal :key #'cliente-cpf))
+(defun consultar-cliente ()
+  (format t "Digite o cpf do cliente: ")
+  (let ((cpf (read)))
+    (let ((cliente (find cpf *clientes* :test #'equal :key #'cliente-cpf)))
+      (if cliente
+          (format t "Cliente encontrado: ~A~%" cliente)
+          (format t "Cliente não encontrado.~%")))))
