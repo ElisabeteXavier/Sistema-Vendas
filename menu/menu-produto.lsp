@@ -22,6 +22,6 @@
         (deletar-produto))
        ((= produto-opcao 0)
         (format t "Voltando ao Menu Principal~%")
-        (return-from menu-cadastro-produto))
+        (return-from menu-produto))
        (t
         (format t "Opção inválida. Tente novamente.~%"))))))
