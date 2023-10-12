@@ -13,7 +13,7 @@
        ((= produto-opcao 1)
         (cadastrar-produto))
        ((= produto-opcao 2)
-        (consultar-produto))
+        (consultar-produto Nil t))
        ((= produto-opcao 3)
         (atualizar-produto))
        ((= produto-opcao 4)

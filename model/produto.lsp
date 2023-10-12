@@ -35,34 +35,25 @@
   ; Verifique se o código já existe na lista de produtos
   (find codigo *LISTA-DE-PRODUTOS* :key (lambda (produto) (getf produto :codigo)) :test #'string=))
 
-(defun consultar-produto (&optional codigo-consulta-param)
-  (if codigo-consulta-param
-      (let ((produto-encontrado (find codigo-consulta-param
-                                     *LISTA-DE-PRODUTOS*
-                                     :key (lambda (produto) (getf produto :codigo))
-                                     :test #'string=)))
-        (if produto-encontrado
-            (format t "Produto encontrado:~% Código: ~a~% Nome: ~a~% Quantidade: ~a~% Valor: ~a~%"
-                    (getf produto-encontrado :codigo)
-                    (getf produto-encontrado :nome)
-                    (getf produto-encontrado :quantidade)
-                    (getf produto-encontrado :valor))
-            (format t "Produto com código ~a não encontrado.~%" codigo-consulta-param)))
-      (progn
-        (format t "Digite o código do produto para consulta: ")
-        (let ((codigo-consulta (read-line)))
-          ; Repetir a lógica original com a entrada do usuário
-          (let ((produto-encontrado (find codigo-consulta
-                                     *LISTA-DE-PRODUTOS*
-                                     :key (lambda (produto) (getf produto :codigo))
-                                     :test #'string=)))
-            (if produto-encontrado
-                (format t "Produto encontrado:~% Código: ~a~% Nome: ~a~% Quantidade: ~a~% Valor: ~a~%"
-                        (getf produto-encontrado :codigo)
-                        (getf produto-encontrado :nome)
-                        (getf produto-encontrado :quantidade)
-                        (getf produto-encontrado :valor))
-                (format t "Produto com código ~a não encontrado.~%" codigo-consulta)))))))
+(defun consultar-produto (&optional codigo-consulta-param mostrar-mensagem)
+  (let ((codigo-consulta (if codigo-consulta-param
+                            codigo-consulta-param
+                            (progn
+                              (format t "Digite o código do produto para consulta: ")
+                              (read-line)))))
+    (let ((produto-encontrado (find codigo-consulta
+                                   *LISTA-DE-PRODUTOS*
+                                   :key (lambda (produto) (getf produto :codigo))
+                                   :test #'string=)))
+      (if mostrar-mensagem
+          (if produto-encontrado
+              (format t "Produto encontrado:% Código: ~a% Nome: a% Quantidade: a% Valor: a%"
+                      (getf produto-encontrado :codigo)
+                      (getf produto-encontrado :nome)
+                      (getf produto-encontrado :quantidade)
+                      (getf produto-encontrado :valor))
+              (format t "Produto com código a não encontrado.%" codigo-consulta)))
+          produto-encontrado)))
 
 
 
@@ -77,7 +68,7 @@
                                      :test #'string=)))
       (if produto-encontrado
           (progn
-            (consultar-produto codigo-atualizar)
+            (consultar-produto codigo-atualizar t )
             (format t "Produto encontrado. Insira as novas informações:~%")
             (format t "------------------------------------------------~%")
 
