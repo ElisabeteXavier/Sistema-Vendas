@@ -11,7 +11,7 @@ Antes de usar o sistema, certifique-se de ter o [CLISP](http://www.clisp.org/) (
 1. Clone o repositório em seu computador:
 
 ```bash
-  git clone (https://github.com/ElisabeteXavier/Sistema-Vendas/)
+  git clone https://github.com/ElisabeteXavier/Sistema-Vendas
 ```
 
 2. Execute o sistema usando o CLISP
