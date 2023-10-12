@@ -4,7 +4,6 @@
 (load "model/cliente.lsp")
 (load "model/produto.lsp")
 (load "model/venda.lsp")
-(load "model/item-venda.lsp")
 
 (defun main ()
   (loop
