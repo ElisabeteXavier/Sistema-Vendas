@@ -2,6 +2,7 @@
 (load "menu/menu-cliente.lsp")
 (load "menu/menu-venda.lsp")
 (load "model/venda.lsp")
+(load "model/item-venda.lsp")
 
 
 (defun main ()
