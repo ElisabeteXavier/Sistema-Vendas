@@ -28,7 +28,8 @@
                   ; Adicione o novo produto à lista de produtos
                   (push produto *LISTA-DE-PRODUTOS*) ; Use a variável global *LISTA-DE-PRODUTOS*
 
-                  (format t "Produto cadastrado com sucesso!~%")))))))))
+                  (format t "Produto cadastrado com sucesso!~%")
+                  (format t "-------------------------------~%")))))))))
 
 (defun produto-existe-p (codigo)
   ; Verifique se o código já existe na lista de produtos
@@ -78,6 +79,7 @@
           (progn
             (consultar-produto codigo-atualizar)
             (format t "Produto encontrado. Insira as novas informações:~%")
+            (format t "------------------------------------------------~%")
 
             (format t "Digite o novo nome do produto: ")
             (let ((novo-nome (read-line)))
@@ -98,12 +100,14 @@
 
 (defun listar-produtos ()
   (format t "Lista de Produtos Cadastrados:~%")
+  (format t "------------------------------~%")
   (dolist (produto *LISTA-DE-PRODUTOS*)
     (format t "Código: ~a~% Nome: ~a~% Quantidade: ~a~% Valor: ~a~%~%"
             (getf produto :codigo)
             (getf produto :nome)
             (getf produto :quantidade)
-            (getf produto :valor)))
+            (getf produto :valor))
+            (format t "-------------------------------~%"))
   (format t "Fim da Lista de Produtos~%"))
 
 
