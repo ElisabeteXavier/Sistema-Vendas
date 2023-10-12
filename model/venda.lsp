@@ -6,6 +6,7 @@
 (defvar *itemvendas* (list))
 
 (defstruct venda
+  (codigo 0 )
   (valor-total 0.0 )
   (status nil )
   (cliente nil) ; Assume que "cliente" é a struct para informações do cliente
@@ -18,6 +19,13 @@
 
 (defun calc-valor-venda (itens)
   (reduce #'+ (mapcar #'item-venda-valor itens)))
+
+(defvar *codigo-venda* 1) ; Variável global para manter o próximo código de venda
+
+(defun gerar-codigo-venda ()
+  (let ((codigo *codigo-venda*))
+    (setq *codigo-venda* (+ *codigo-venda* 1))
+    codigo))
 
 (defun registrar-venda ()
   (loop
@@ -56,7 +64,11 @@
 
       (let ((valor-venda (calc-valor-venda *itemvendas*))) ; Calcula o valor total da venda com base nos itens de venda.
       (format t "Valor total da venda: ~a~%" valor-venda)
-      (let ((venda (make-venda :valor-total valor-venda :status t :cliente nil :itensVenda *itemvendas*)))
+      (let ((venda (make-venda :codigo (gerar-codigo-venda) ; Gera o código da venda automaticamente
+                               :valor-total valor-venda
+                               :status t
+                               :cliente nil
+                               :itensVenda *itemvendas*)))
         (push venda *vendas*) ; Adiciona a venda à lista de vendas.
         (setf *itemvendas* (list)) ; Limpa a lista de itens de venda para a próxima venda.
         (format t "Venda registrada com sucesso.~%")
@@ -64,7 +76,6 @@
     )
         (return)))
     )
-    
 )
 
 (defun relatorio-venda (venda)
