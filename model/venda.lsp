@@ -31,12 +31,12 @@
               (let ((quantidade (read)))
                 (if quantidade
                     (progn
-                      (format t "Quantidade válida: ~a~" quantidade)
+                      (format t "Quantidade válida: ~D~%" quantidade)
                       (let ((valor-total (calc-valor-item quantidade (produto-valor produto))))
                         (format t "Valor total do item: ~a~%" valor-total)
                         (let ((item-venda (make-item-venda :produto-ref produto :quantidade quantidade :valor valor-total)))
-                          (format t "Item-venda criado: ~a~" item-venda)
-                          (push item-venda *itemvendas) ; Adicione o item-venda à lista de itens de venda atual.
+                          (format t "Item-venda criado: ~a~%" item-venda)
+                          (push item-venda *itemvendas*) ; Adicione o item-venda à lista de itens de venda atual.
                           (format t "Item-venda adicionado à venda atual.")
                         )
                       )
