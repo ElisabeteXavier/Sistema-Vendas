@@ -15,9 +15,10 @@
 (defun atualizar-cliente ()
   (format t "Digite o CPF do cliente para atualização: ")
   (let ((cpf (read)))
-    (let ((cliente (find-cliente cpf)))
+    (let ((cliente (consultar-cliente cpf)))
       (if cliente
           (progn
+            (consultar-cliente cpf t) 
             (format t "Digite o novo nome do cliente: ")
             (let ((novo-nome (read)))
               (setf (cliente-nome cliente) novo-nome)
@@ -27,11 +28,16 @@
 (defun apagar-cliente ()
   (format t "Digite o CPF do cliente para apagar: ")
   (let ((cpf (read)))
-    (let ((cliente (find-cliente cpf)))
+    (let ((cliente (consultar-cliente cpf)))
       (if cliente
           (progn
-            (setq *clientes* (remove cliente *clientes* :test #'eq))
-            (format t "Cliente com CPF ~a apagado~%" cpf))
+            (format t "Deseja realmente apagar o cliente com CPF ~a? (s/n): " cpf)
+            (let ((confirmacao (read-line)))
+              (if (string= confirmacao "s")
+                  (progn
+                    (setq *clientes* (remove cliente *clientes* :test #'eq))
+                    (format t "Cliente com CPF ~a apagado~%" cpf))
+                  (format t "Operação cancelada. O cliente não foi apagado.~%"))))
           (format t "Cliente com CPF ~a não encontrado~%" cpf)))))
 
 (defun listar-clientes ()
@@ -39,10 +45,14 @@
   (dolist (cliente *clientes*)
     (format t "Nome: ~a, CPF: ~a~%" (cliente-nome cliente) (cliente-cpf cliente))))
 
-(defun consultar-cliente ()
-  (format t "Digite o cpf do cliente: ")
-  (let ((cpf (read)))
-    (let ((cliente (find cpf *clientes* :test #'equal :key #'cliente-cpf)))
-      (if cliente
-          (format t "Cliente encontrado: ~A~%" cliente)
-          (format t "Cliente não encontrado.~%")))))
+(defun consultar-cliente (&optional cpf mostrar-mensagem)
+  (unless cpf
+    (format t "Digite o cpf do cliente: ")
+    (setq cpf (read)))
+  (let ((cliente (find cpf *clientes* :test #'equal :key #'cliente-cpf)))
+    (if cliente
+        (if mostrar-mensagem
+            (format t "Cliente encontrado: ~A~%" cliente))
+        (if mostrar-mensagem
+            (format t "Cliente não encontrado.~%")))
+    cliente))

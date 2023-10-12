@@ -13,7 +13,7 @@
        ((= cliente-opcao 1)        
         (cadastrar-cliente)) ; Chame a função para cadastrar cliente aqui
        ((= cliente-opcao 2)
-        (consultar-cliente)) ; Chame a função para consultar cliente aqui
+        (consultar-cliente Nil t)) ; Chame a função para consultar cliente aqui
        ((= cliente-opcao 3)
         (atualizar-cliente)) ; Chame a função para atualizar cliente aqui
        ((= cliente-opcao 4)
