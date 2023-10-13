@@ -100,6 +100,14 @@
                 (venda-cliente venda-encontrada))
         (format t "Venda com código ~a não encontrada.~%" codigo-venda))))
 
+(defun cancelar-venda (codigo-venda)
+  (let ((venda-encontrada (find codigo-venda *vendas* :test #'equal :key #'venda-codigo)))
+    (if venda-encontrada
+        (progn
+          (setq *vendas* (remove venda-encontrada *vendas* :test #'equal))
+          (format t "Venda com código ~a cancelada com sucesso.~%" codigo-venda))
+        (format t "Venda com código ~a não encontrada. Nenhuma venda foi cancelada.~%" codigo-venda))))
+
 (defun relatorio-venda (venda)
   (format t "===== Relatório de Venda =====~%")
   (format t "Cliente: ~a~%" (venda-cliente venda))

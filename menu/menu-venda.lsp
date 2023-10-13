@@ -16,7 +16,9 @@
         (let ((numero-venda (read)))
           (consultar-venda numero-venda))) ; Chame a função para consultar venda aqui
        ((= venda-opcao 3)
-        (cancelar-venda)) ; Chame a função para atualizar venda aqui
+        (format t "Digite o número da venda para cancelar: ")
+        (let ((numero-venda (read)))
+        (cancelar-venda numero-venda))) ; Chame a função para atualizar venda aqui
        ((= venda-opcao 4)
         (listar-vendas)) ; Chame a função para listar vendas aqui
        ((= venda-opcao 0)

@@ -95,7 +95,7 @@
 
 
 (defun baixa-saldo-produto (produto quantidade-a-baixar)
-  (if (< (produto-quantidade produto) quantidade-a-baixar)
+  (if (<= (produto-quantidade produto) quantidade-a-baixar)
       nil ; Retorna nil se não houver saldo suficiente
       (progn
         ; Reduza a quantidade disponível no produto
@@ -110,14 +110,26 @@
 
     ; Procura o produto com o código informado
     (let ((produto-encontrado (consultar-produto codigo-remover)))
-    (if produto-encontrado
-        (progn
-          (consultar-produto codigo-remover)
-          (format t "Deseja realmente apagar o produto com o código ~a? (s/n): " codigo-remover)
-          (let ((confirmacao (read-line)))
-              (if (string= confirmacao "s")
-                  (progn
-                    (setq *lista-de-produtos* (remove produto-encontrado *lista-de-produtos* :test #'equal))
-                    (format t "Produto com código ~a deletado com sucesso!~%" codigo-remover))
-                  (format t "Operação cancelada. O produto não foi apagado.~%"))))
-        (format t "Produto com código ~a não encontrado. Nenhum produto foi deletado.~%" codigo-remover)))))
+      (if produto-encontrado
+          (progn
+            (if (produto-em-venda-p codigo-remover)
+                (format t "Não é possível excluir o produto com código ~a, pois ele está associado a uma venda.~%" codigo-remover)
+                (progn
+                  (consultar-produto codigo-remover)
+                  (format t "Deseja realmente apagar o produto com o código ~a? (s/n): " codigo-remover)
+                  (let ((confirmacao (read-line)))
+                    (if (string= confirmacao "s")
+                        (progn
+                          (setq *lista-de-produtos* (remove produto-encontrado *lista-de-produtos* :test #'equal))
+                          (format t "Produto com código ~a deletado com sucesso!~%" codigo-remover))
+                        (format t "Operação cancelada. O produto não foi apagado.~%"))))))
+          (format t "Produto com código ~a não encontrado. Nenhum produto foi deletado.~%" codigo-remover)))))
+
+(defun produto-em-venda-p (codigo-produto)
+  (some (lambda (venda)
+          (some (lambda (item)
+                  (string= codigo-produto (produto-codigo (itemvenda-produto item)))
+                )
+                (venda-itensVenda venda)))
+        *vendas*))
+

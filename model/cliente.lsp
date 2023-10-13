@@ -31,14 +31,24 @@
     (let ((cliente (consultar-cliente cpf)))
       (if cliente
           (progn
-            (format t "Deseja realmente apagar o cliente com CPF ~a? (s/n): " cpf)
-            (let ((confirmacao (read-line)))
-              (if (string= confirmacao "s")
-                  (progn
-                    (setq *clientes* (remove cliente *clientes* :test #'eq))
-                    (format t "Cliente com CPF ~a apagado~%" cpf))
-                  (format t "Operação cancelada. O cliente não foi apagado.~%"))))
-          (format t "Cliente com CPF ~a não encontrado~%" cpf)))))
+            (if (cliente-em-venda-p cpf)
+                (format t "Não é possível excluir o cliente com CPF ~a, pois ele está associado a uma venda.~%" cpf)
+                (progn
+                  (format t "Deseja realmente apagar o cliente com CPF ~a? (s/n): " cpf)
+                  (let ((confirmacao (read-line)))
+                    (if (string= confirmacao "s")
+                        (progn
+                          (setq *clientes* (remove cliente *clientes* :test #'eq))
+                          (format t "Cliente com CPF ~a apagado.~%" cpf))
+                        (format t "Operação cancelada. O cliente não foi apagado.~%"))))))
+          (format t "Cliente com CPF ~a não encontrado.~%" cpf)))))
+
+(defun cliente-em-venda-p (cpf)
+  (some (lambda (venda)
+          (and (venda-cliente venda)
+               (string= cpf (cliente-cpf (venda-cliente venda)))))
+        *vendas*))
+
 
 (defun listar-clientes ()
   (format t "Listagem de Clientes:~%")
