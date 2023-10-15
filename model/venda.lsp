@@ -28,7 +28,7 @@
 (defun registrar-venda ()
   (format t "Deseja informar cliente? (S/N): ")
   (let ((confirmacao (read-line)))
-    (if (string= confirmacao "S")
+    (if (string-equal confirmacao "S")
     (progn 
         (format t "Informe o cpf do cliente: ")
         (let ((cpf (read-line)))
@@ -72,7 +72,7 @@
 
     (format t "Deseja adicionar mais itens a esta venda? (S/N): ")
     (let ((resposta (read-line)))
-      (when (string= resposta "N")
+      (when (string-equal resposta "N")
 
       (let ((valor-venda (calc-valor-venda *itemvendas*))) ; Calcula o valor total da venda com base nos itens de venda.
       (format t "Valor total da venda: ~a~%" valor-venda)

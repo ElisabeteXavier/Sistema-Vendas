@@ -118,7 +118,7 @@
                 (consultar-produto codigo-remover)
                 (format t "Deseja realmente apagar o produto com o código ~a? (s/n): " codigo-remover)
                 (let ((confirmacao (read-line)))
-                  (if (string= confirmacao "s")
+                  (if (string-equal confirmacao "s")
                       (progn
                         (setq *lista-de-produtos* (remove produto-encontrado *lista-de-produtos* :test #'equal))
                         (format t "Produto com código ~a deletado com sucesso!~%" codigo-remover))

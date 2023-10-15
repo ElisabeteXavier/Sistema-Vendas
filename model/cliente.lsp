@@ -36,7 +36,7 @@
                 (progn
                   (format t "Deseja realmente apagar o cliente com CPF ~a? (s/n): " cpf)
                   (let ((confirmacao (read-line)))
-                    (if (string= confirmacao "s")
+                    (if (string-equal confirmacao "s")
                         (progn
                           (setq *clientes* (remove cliente *clientes* :test #'eq))
                           (format t "Cliente com CPF ~a apagado.~%" cpf))
