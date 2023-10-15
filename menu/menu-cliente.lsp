@@ -1,6 +1,6 @@
 (defun menu-cliente ()
   (loop
-    (format t "Menu Cliente~%")
+    (format t "Menu Clientes~%")
     (format t "1 - Cadastrar Cliente~%")
     (format t "2 - Consultar Cliente~%")
     (format t "3 - Atualizar Cliente~%")
@@ -11,17 +11,17 @@
     (let ((cliente-opcao (read)))
       (cond
        ((= cliente-opcao 1)        
-        (cadastrar-cliente)) ; Chame a função para cadastrar cliente aqui
+        (cadastrar-cliente)) 
        ((= cliente-opcao 2)
-        (consultar-cliente Nil t)) ; Chame a função para consultar cliente aqui
+        (consultar-cliente Nil t)) 
        ((= cliente-opcao 3)
-        (atualizar-cliente)) ; Chame a função para atualizar cliente aqui
+        (atualizar-cliente)) 
        ((= cliente-opcao 4)
-        (apagar-cliente)) ; Chame a função para apagar cliente aqui
+        (apagar-cliente)) 
        ((= cliente-opcao 5)
-        (listar-clientes)) ; Chame a função para listar clientes aqui
+        (listar-clientes)) 
        ((= cliente-opcao 0)
         (format t "Voltando ao Menu Principal~%")
-        (return-from menu-cliente)) ; Saia do menu do cliente e retorne ao menu principal
+        (return-from menu-cliente)) 
        (t
         (format t "Opção inválida. Tente novamente.~%"))))))
