@@ -125,12 +125,25 @@
                       (format t "Operação cancelada. O produto não foi apagado.~%"))))))
         (format t "Produto com código ~a não encontrado. Nenhum produto foi deletado.~%" codigo-remover)))))
 
+; (defun produto-em-venda-p (codigo-produto)
+;   (some (lambda (venda)
+;           (some (lambda (item)
+;                   (string= codigo-produto (produto-codigo (item-venda-produto-ref item)))
+;                 )
+;                 (venda-itensVenda venda)))
+;         *vendas*))
 (defun produto-em-venda-p (codigo-produto)
-  (some (lambda (venda)
-          (some (lambda (item)
-                  (string= codigo-produto (produto-codigo (item-venda-produto-ref item)))
-                )
-                (venda-itensVenda venda)))
-        *vendas*))
+  (not (some (lambda (venda)
+               (and
+                (null (venda-status venda)) ; Verifica se o status da venda é nil
+                (some (lambda (item)
+                        (string= codigo-produto (produto-codigo (item-venda-produto-ref item))))
+                      (venda-itensVenda venda))))
+             *vendas*)))
+
+
+
+
+
         
 
