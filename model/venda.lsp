@@ -45,11 +45,8 @@
               (format t "Produto encontrado: ~a~%" produto)
               (format t "Informe a quantidade: ")
               (let ((quantidade (read)))
-                (if quantidade                                      
-                    (progn
-                      (format t "Quantidade válida: ~D~%" quantidade)
-
-                      (if (baixa-saldo-produto produto quantidade)
+                (if quantidade                                       
+                      (if (baixa-quantidade-produto produto quantidade)
                         (progn 
                           (let ((valor-total (calc-valor-item quantidade (produto-valor produto))))
                             (format t "Valor total do item: ~a~%" valor-total)
@@ -58,10 +55,8 @@
                               (push item-venda *itemvendas*) ; Adicione o item-venda à lista de itens de venda atual.
                               (format t "Item-venda adicionado à venda atual.~%")
                             )))                        
-                          (format t "Produto com Saldo insuficiente.~%")
+                          (format t "Quantidade inválida.~%")
                         )
-                    )
-                    (format t "Quantidade inválida.~%")
                 )
               )
             )
@@ -90,15 +85,15 @@
     )
 )
 
-(defun consultar-venda (codigo-venda)
-  (let ((venda-encontrada (find codigo-venda *vendas* :test #'equal :key #'venda-codigo)))
-    (if venda-encontrada
-        (format t "Venda encontrada:~% Código: ~a~% Valor Total: ~a~% Status: ~a~% Cliente: ~a~%"
-                (venda-codigo venda-encontrada)
-                (venda-valor-total venda-encontrada)
-                (if (venda-status venda-encontrada) "Ativa" "Cancelada")
-                (venda-cliente venda-encontrada))
-        (format t "Venda com código ~a não encontrada.~%" codigo-venda))))
+  (defun consultar-venda (codigo-venda)
+    (let ((venda-encontrada (find codigo-venda *vendas* :test #'equal :key #'venda-codigo)))
+      (if venda-encontrada
+          (format t "Venda encontrada:~% Código: ~a~% Valor Total: ~a~% Status: ~a~% Cliente: ~a~%"
+                  (venda-codigo venda-encontrada)
+                  (venda-valor-total venda-encontrada)
+                  (if (venda-status venda-encontrada) "Ativa" "Cancelada")
+                  (venda-cliente venda-encontrada))
+          (format t "Venda com código ~a não encontrada.~%" codigo-venda))))
 
 (defun cancelar-venda (codigo-venda)
   (let ((venda-encontrada (find codigo-venda *vendas* :test #'equal :key #'venda-codigo)))
@@ -122,8 +117,8 @@
   (format t "==============================~%"))
 
 (defun listar-vendas()
-  (format t "===== Lista de Vendas =====~%")
-  (dolist (venda *vendas*)
-    (relatorio-venda venda)
-    (format t "--------------------------~%"))
-  (format t "==============================~%"))
+    (format t "===== Lista de Vendas =====~%")
+    (dolist (venda *vendas*)
+      (relatorio-venda venda)
+      (format t "--------------------------~%"))
+    (format t "==============================~%"))
