@@ -99,14 +99,15 @@
   (let ((venda-encontrada (find codigo-venda *vendas* :test #'equal :key #'venda-codigo)))
     (if venda-encontrada
         (progn
-          (setq *vendas* (remove venda-encontrada *vendas* :test #'equal))
+          (setf (venda-status venda-encontrada) nil)
           (format t "Venda com código ~a cancelada com sucesso.~%" codigo-venda))
         (format t "Venda com código ~a não encontrada. Nenhuma venda foi cancelada.~%" codigo-venda))))
+
 
 (defun relatorio-venda (venda)
   (format t "===== Relatório de Venda =====~%")
   (format t "Cliente: ~a~%" (venda-cliente venda))
-  (format t "Status: ~a~%" (if (venda-status venda) "Concluída" "Em andamento"))
+  (format t "Status: ~a~%" (if (venda-status venda) "Concluída" "Cancelada"))
   (format t "Itens da Venda:~%")
   (dolist (item (venda-itensVenda venda))
     (format t "Produto: ~a, Quantidade: ~a, Valor Total: ~a~%"
