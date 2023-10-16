@@ -44,11 +44,12 @@
           (format t "Cliente com CPF ~a não encontrado.~%" cpf)))))
 
 (defun cliente-em-venda-p (cpf)
-  (some (lambda (venda)
-          (and (venda-cliente venda)
-               (string= cpf (cliente-cpf (venda-cliente venda)))))
-        *vendas*))
-
+  (let ((encontrado nil))
+    (dolist (venda *vendas* encontrado)
+      (when (and (venda-cliente venda)
+                 (string= cpf (cliente-cpf (venda-cliente venda)))
+                 (not (null (venda-status venda))))
+        (setq encontrado t)))))
 
 (defun listar-clientes ()
   (format t "Listagem de Clientes:~%")
